@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4xeide7fgg2v"]
+
+[ext_resource type="Texture2D" uid="uid://blxgf56wfwnn3" path="res://Sprites/Enviorment/Objects/ChildsroomBackground.png" id="1_slx10"]
+
+[node name="ChildsroomParalax" type="Node2D"]
+
+[node name="ChildsroomBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ChildsroomBackground"]
+motion_scale = Vector2(0.01, 0)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ChildsroomBackground/ParallaxLayer"]
+texture = ExtResource("1_slx10")
+centered = false

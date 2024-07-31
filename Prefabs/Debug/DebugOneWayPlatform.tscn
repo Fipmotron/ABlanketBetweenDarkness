@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://oh5xxi1kxx21"]
+
+[ext_resource type="Script" path="res://Scripts/Meta/Alchemy.gd" id="1_fl2tm"]
+[ext_resource type="Texture2D" uid="uid://c06cgqqais5as" path="res://Sprites/Debug/DebugOneWayPlatform.png" id="1_xwvvx"]
+[ext_resource type="Script" path="res://Scripts/Objects/CollisionWorkaround.gd" id="2_muo8r"]
+[ext_resource type="AudioStream" uid="uid://4tobaf6hwndy" path="res://Sounds/SFX/magical_1.ogg" id="4_oatk1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uqga2"]
+resource_local_to_scene = true
+size = Vector2(32, 8)
+
+[node name="DebugOneWayPlatform" type="CharacterBody2D"]
+collision_layer = 17
+script = ExtResource("1_fl2tm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_uqga2")
+one_way_collision = true
+script = ExtResource("2_muo8r")
+
+[node name="Platform" type="Sprite2D" parent="."]
+texture = ExtResource("1_xwvvx")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 16)
+region_filter_clip_enabled = true
+
+[node name="Magic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_oatk1")
+volume_db = -10.0
+pitch_scale = 1.5
+attenuation = 15.0
+bus = &"SFX"

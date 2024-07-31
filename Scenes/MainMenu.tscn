@@ -1,0 +1,506 @@
+[gd_scene load_steps=18 format=3 uid="uid://riymggjf5p4r"]
+
+[ext_resource type="Script" path="res://Scripts/MainMenu.gd" id="1_tcbmv"]
+[ext_resource type="Texture2D" uid="uid://uq7q55ulq47t" path="res://Sprites/Other/TitleScreenPsGj-Sheet.png" id="2_kergb"]
+[ext_resource type="Script" path="res://Scripts/Meta/PlayOnStart.gd" id="3_h0ply"]
+[ext_resource type="Texture2D" uid="uid://lhhv3iwd8nrv" path="res://Sprites/Other/TitleLetters.png" id="4_msxn3"]
+[ext_resource type="Script" path="res://Scripts/TitleLetters.gd" id="5_rea8u"]
+[ext_resource type="Shader" path="res://Shaders/Outline.gdshader" id="6_tl21f"]
+[ext_resource type="Texture2D" uid="uid://blxgf56wfwnn3" path="res://Sprites/Enviorment/Objects/ChildsroomBackground.png" id="7_07tth"]
+[ext_resource type="Texture2D" uid="uid://bhoyuw4lcib8c" path="res://Sprites/Enviorment/Objects/PushableBlock.png" id="7_v2kgi"]
+[ext_resource type="Texture2D" uid="uid://dpx73bx61ynrp" path="res://Sprites/Enviorment/Objects/BasementBackground.png" id="8_xtktn"]
+[ext_resource type="Script" path="res://Scripts/Other/OptionsPanel.gd" id="9_oh7ti"]
+[ext_resource type="AudioStream" uid="uid://d084bej30gf3h" path="res://Sounds/SFX/ButtonSelectSFX.wav" id="11_1ibhk"]
+[ext_resource type="AudioStream" uid="uid://tt84fk2y7xsq" path="res://Sounds/Music/Socapex - Dark ambiance.mp3" id="12_fhfl2"]
+
+[sub_resource type="Animation" id="Animation_lwoir"]
+resource_name = "Title"
+length = 5.5
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4, 4.25, 4.5, 4.75, 5, 5.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w83im"]
+_data = {
+"Title": SubResource("Animation_lwoir")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8tyfi"]
+shader = ExtResource("6_tl21f")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 5.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0cpwe"]
+shader = ExtResource("6_tl21f")
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/width = 5.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_1usxs"]
+font_size = 32
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchor_left = -0.5
+anchor_top = -0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 320.0
+offset_top = 180.0
+offset_right = -320.0
+offset_bottom = -180.0
+script = ExtResource("1_tcbmv")
+
+[node name="Panel" type="Sprite2D" parent="."]
+self_modulate = Color(0.552956, 0.552956, 0.552956, 1)
+texture = ExtResource("2_kergb")
+hframes = 14
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel"]
+libraries = {
+"": SubResource("AnimationLibrary_w83im")
+}
+script = ExtResource("3_h0ply")
+
+[node name="TitleLetters" type="Sprite2D" parent="Panel"]
+modulate = Color(0.589096, 0.589096, 0.589096, 1)
+position = Vector2(0, -64)
+texture = ExtResource("4_msxn3")
+offset = Vector2(0, 64)
+script = ExtResource("5_rea8u")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="StartGamePanel" type="Control" parent="."]
+anchors_preset = 0
+offset_left = -320.0
+offset_top = -180.0
+offset_right = 320.0
+offset_bottom = 180.0
+
+[node name="StartGameButton" type="Button" parent="StartGamePanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -68.0
+offset_right = 80.0
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Start Game"
+
+[node name="SelctionPanel" type="Control" parent="."]
+anchors_preset = 0
+offset_left = -320.0
+offset_top = -540.0
+offset_right = 320.0
+offset_bottom = -180.0
+
+[node name="Panel" type="Panel" parent="SelctionPanel"]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="StartStoryButton" type="Button" parent="SelctionPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -72.0
+offset_right = 80.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start Story"
+
+[node name="LevelSelectButton" type="Button" parent="SelctionPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -32.0
+offset_right = 80.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Level Selection"
+
+[node name="OptionsButton" type="Button" parent="SelctionPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = 8.0
+offset_right = 80.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="SelctionPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = 48.0
+offset_right = 80.0
+offset_bottom = 79.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quit Game"
+
+[node name="CreditsButton" type="Button" parent="SelctionPanel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -36.0
+offset_right = 71.0
+offset_bottom = -5.0
+grow_vertical = 0
+text = "Credits"
+
+[node name="CreditsPanel" type="Control" parent="."]
+anchors_preset = 0
+offset_left = -320.0
+offset_top = -540.0
+offset_right = 320.0
+offset_bottom = -180.0
+
+[node name="Panel" type="Panel" parent="CreditsPanel"]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="Label" type="Label" parent="CreditsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game made by Fipmotron
+Sound and Music from OpenGameArt.org
+
+Thanks for checking the game out!"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="CreditsPanel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -36.0
+offset_right = 88.0
+offset_bottom = -5.0
+grow_vertical = 0
+text = "Back"
+
+[node name="LevelSelectionPanel" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 320.0
+offset_top = -180.0
+offset_right = 960.0
+offset_bottom = 180.0
+
+[node name="Panel" type="Panel" parent="LevelSelectionPanel"]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="AreaOne" type="TextureRect" parent="LevelSelectionPanel"]
+material = SubResource("ShaderMaterial_8tyfi")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = -144.0
+offset_right = 352.0
+offset_bottom = 216.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_07tth")
+
+[node name="YourRoomButton" type="Button" parent="LevelSelectionPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -224.0
+offset_top = -164.0
+offset_right = -95.0
+offset_bottom = -132.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Childs Room"
+
+[node name="AreaThree" type="TextureRect" parent="LevelSelectionPanel"]
+material = SubResource("ShaderMaterial_0cpwe")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = -144.0
+offset_right = 672.0
+offset_bottom = 216.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("8_xtktn")
+
+[node name="BasementButton" type="Button" parent="LevelSelectionPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 96.0
+offset_top = -164.0
+offset_right = 225.0
+offset_bottom = -132.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Basement"
+
+[node name="BackButton" type="Button" parent="LevelSelectionPanel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -37.0
+offset_right = 112.0
+offset_bottom = -6.0
+grow_vertical = 0
+text = "Back"
+
+[node name="OptionsPanel" type="Control" parent="."]
+anchors_preset = 0
+offset_left = -960.0
+offset_top = -180.0
+offset_right = -320.0
+offset_bottom = 180.0
+script = ExtResource("9_oh7ti")
+
+[node name="Panel" type="Panel" parent="OptionsPanel"]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 360.0
+
+[node name="VolumeLabel" type="Label" parent="OptionsPanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -368.0
+offset_top = -136.0
+offset_right = -250.0
+offset_bottom = -91.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Volume"
+label_settings = SubResource("LabelSettings_1usxs")
+
+[node name="MasterVolumeLabel" type="Label" parent="OptionsPanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -472.0
+offset_top = -72.0
+offset_right = -417.0
+offset_bottom = -48.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Master"
+
+[node name="HSlider" type="HSlider" parent="OptionsPanel/MasterVolumeLabel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = -12.0
+offset_right = 233.0
+offset_bottom = 11.0
+grow_horizontal = 0
+grow_vertical = 2
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="MusicVolumeLabel" type="Label" parent="OptionsPanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -472.0
+offset_top = -16.0
+offset_right = -417.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Music"
+horizontal_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="OptionsPanel/MusicVolumeLabel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = -12.0
+offset_right = 233.0
+offset_bottom = 11.0
+grow_horizontal = 0
+grow_vertical = 2
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="SFXVolumeLabel" type="Label" parent="OptionsPanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -472.0
+offset_top = 40.0
+offset_right = -417.0
+offset_bottom = 64.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "SFX"
+horizontal_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="OptionsPanel/SFXVolumeLabel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = -12.0
+offset_right = 233.0
+offset_bottom = 11.0
+grow_horizontal = 0
+grow_vertical = 2
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="BackButton" type="Button" parent="OptionsPanel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -52.0
+offset_right = 104.0
+offset_bottom = -13.0
+grow_vertical = 0
+text = "Back"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+modulate = Color(0, 0, 0, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -216.0
+offset_right = -245.0
+offset_bottom = -130.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(5, 5)
+texture = ExtResource("7_v2kgi")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_1ibhk")
+bus = &"SFX"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_fhfl2")
+autoplay = true
+bus = &"Music"
+
+[connection signal="pressed" from="StartGamePanel/StartGameButton" to="." method="_on_start_game_button_pressed"]
+[connection signal="pressed" from="SelctionPanel/StartStoryButton" to="." method="_on_start_story_button_pressed"]
+[connection signal="pressed" from="SelctionPanel/LevelSelectButton" to="." method="_on_level_select_button_pressed"]
+[connection signal="pressed" from="SelctionPanel/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="SelctionPanel/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="SelctionPanel/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="CreditsPanel/Button" to="." method="_on_CreditBack_button_pressed"]
+[connection signal="pressed" from="LevelSelectionPanel/YourRoomButton" to="." method="_on_your_room_button_pressed"]
+[connection signal="pressed" from="LevelSelectionPanel/BasementButton" to="." method="_on_basement_button_pressed"]
+[connection signal="pressed" from="LevelSelectionPanel/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="value_changed" from="OptionsPanel/MasterVolumeLabel/HSlider" to="OptionsPanel" method="_on_master_value_changed"]
+[connection signal="value_changed" from="OptionsPanel/MusicVolumeLabel/HSlider" to="OptionsPanel" method="_on_Music_value_changed"]
+[connection signal="value_changed" from="OptionsPanel/SFXVolumeLabel/HSlider" to="OptionsPanel" method="_on_SFX_value_changed"]
+[connection signal="pressed" from="OptionsPanel/BackButton" to="." method="_on_back_button_pressed"]

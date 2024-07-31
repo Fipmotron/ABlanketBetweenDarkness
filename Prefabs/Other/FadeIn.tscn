@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://oldaqr1j81ku"]
+
+[ext_resource type="Script" path="res://Scripts/FadeIn.gd" id="2_7t8jy"]
+
+[node name="FadeIn" type="ColorRect" groups=["Fade"]]
+modulate = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 1)
+script = ExtResource("2_7t8jy")

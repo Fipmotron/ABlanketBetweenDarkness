@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmnklh68ite4q"]
+
+[ext_resource type="Script" path="res://Scripts/Meta/Alchemy.gd" id="1_htwkb"]
+[ext_resource type="Script" path="res://Scripts/Objects/PushableBlock.gd" id="1_itvfu"]
+[ext_resource type="Texture2D" uid="uid://bhoyuw4lcib8c" path="res://Sprites/Enviorment/Objects/PushableBlock.png" id="3_xd1qm"]
+[ext_resource type="AudioStream" uid="uid://4tobaf6hwndy" path="res://Sounds/SFX/magical_1.ogg" id="4_ugu7n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1qeom"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_768ko"]
+size = Vector2(48, 30)
+
+[node name="PushableBlock" type="CharacterBody2D"]
+script = ExtResource("1_htwkb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1qeom")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("1_itvfu")
+Gravity = 250.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_768ko")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_xd1qm")
+
+[node name="Magic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ugu7n")
+volume_db = -10.0
+pitch_scale = 1.5
+attenuation = 15.0
+bus = &"SFX"
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_Body_Entered"]
+[connection signal="body_exited" from="Area2D" to="Area2D" method="_Body_Exited"]

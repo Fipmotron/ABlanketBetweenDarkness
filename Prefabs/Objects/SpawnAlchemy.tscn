@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8yguct274fa5"]
+
+[ext_resource type="Script" path="res://Scripts/Meta/Alchemy.gd" id="1_igose"]
+
+[node name="SpawnAlchemy" type="CharacterBody2D"]
+position = Vector2(336, -136)
+script = ExtResource("1_igose")
+Cr_Enabled = true
+Spawn_String = "res://Prefabs/Debug/DebugOneWayPlatform.tscn"

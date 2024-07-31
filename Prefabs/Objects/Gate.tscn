@@ -1,0 +1,118 @@
+[gd_scene load_steps=18 format=3 uid="uid://bgimsk53ti0py"]
+
+[ext_resource type="Script" path="res://Scripts/Objects/Gate.gd" id="1_cvrn5"]
+[ext_resource type="Texture2D" uid="uid://ci03absggdnk8" path="res://Sprites/Enviorment/Objects/GatePS-Sheet.png" id="2_j6pqp"]
+[ext_resource type="AudioStream" uid="uid://wsom27dc6eb0" path="res://Sounds/SFX/DoorOpen.wav" id="3_i0f04"]
+[ext_resource type="AudioStream" uid="uid://cq7p6ygfcfrtx" path="res://Sounds/SFX/DoorShut.wav" id="4_b0fe5"]
+
+[sub_resource type="Animation" id="Animation_u5akn"]
+resource_name = "Close"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_oytb5"]
+resource_name = "Open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_71dg8"]
+resource_name = "Trans"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j1suo"]
+_data = {
+"Close": SubResource("Animation_u5akn"),
+"Open": SubResource("Animation_oytb5"),
+"Trans": SubResource("Animation_71dg8")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rsnat"]
+animation = &"Close"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_shyfj"]
+animation = &"Open"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0pdjn"]
+animation = &"Trans"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4qayr"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_db0eg"]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_raos0"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tih0y"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_corw8"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_3yuth"]
+states/Close/node = SubResource("AnimationNodeAnimation_rsnat")
+states/Close/position = Vector2(360, 132)
+states/Open/node = SubResource("AnimationNodeAnimation_shyfj")
+states/Open/position = Vector2(674, 132)
+states/Trans/node = SubResource("AnimationNodeAnimation_0pdjn")
+states/Trans/position = Vector2(503, 132)
+transitions = ["Trans", "Open", SubResource("AnimationNodeStateMachineTransition_4qayr"), "Trans", "Close", SubResource("AnimationNodeStateMachineTransition_db0eg"), "Close", "Trans", SubResource("AnimationNodeStateMachineTransition_raos0"), "Open", "Trans", SubResource("AnimationNodeStateMachineTransition_tih0y"), "Start", "Close", SubResource("AnimationNodeStateMachineTransition_corw8")]
+
+[node name="Gate" type="CharacterBody2D"]
+script = ExtResource("1_cvrn5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_j6pqp")
+hframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_j1suo")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="AnimationPlayer"]
+root_node = NodePath("../..")
+tree_root = SubResource("AnimationNodeStateMachine_3yuth")
+anim_player = NodePath("..")
+
+[node name="Open" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_i0f04")
+bus = &"SFX"
+
+[node name="Close" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_b0fe5")
+bus = &"SFX"

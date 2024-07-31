@@ -1,0 +1,107 @@
+[gd_scene load_steps=14 format=3 uid="uid://b1qciwncu7ddo"]
+
+[ext_resource type="Script" path="res://Scripts/Meta/Camera.gd" id="1_nv1g2"]
+[ext_resource type="PackedScene" uid="uid://bpeo4gvj3ml0s" path="res://Prefabs/Entitys/Player.tscn" id="2_njk4b"]
+[ext_resource type="PackedScene" uid="uid://cm2ypl1q1u6mo" path="res://Prefabs/Objects/LightSwitch.tscn" id="3_s7bp5"]
+[ext_resource type="Script" path="res://Scripts/Meta/WorldLight.gd" id="3_uawcr"]
+[ext_resource type="PackedScene" uid="uid://oh5xxi1kxx21" path="res://Prefabs/Debug/DebugOneWayPlatform.tscn" id="5_3vbc1"]
+[ext_resource type="PackedScene" uid="uid://b8yguct274fa5" path="res://Prefabs/Objects/SpawnAlchemy.tscn" id="6_i2ucs"]
+[ext_resource type="Script" path="res://Scripts/Meta/Alchemy.gd" id="7_imgbl"]
+[ext_resource type="PackedScene" uid="uid://rrp3ony8avvd" path="res://Prefabs/Debug/DebugSpike.tscn" id="8_acnxc"]
+[ext_resource type="PackedScene" uid="uid://bmnklh68ite4q" path="res://Prefabs/Objects/PushableBlock.tscn" id="9_7ylw8"]
+[ext_resource type="PackedScene" uid="uid://iffm0884mkr0" path="res://Prefabs/Objects/RoomSetter.tscn" id="11_lfcno"]
+
+[sub_resource type="TileSet" id="TileSet_5tb3d"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d1mjn"]
+resource_local_to_scene = true
+size = Vector2(64, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cql6v"]
+size = Vector2(640, 360)
+
+[node name="TestScene" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+drag_horizontal_enabled = true
+drag_horizontal_offset = 1.0
+drag_vertical_offset = -1.0
+drag_left_margin = 0.0
+drag_top_margin = 0.0
+drag_bottom_margin = 0.5
+script = ExtResource("1_nv1g2")
+
+[node name="Player" parent="." groups=["Player"] instance=ExtResource("2_njk4b")]
+position = Vector2(0, -1)
+
+[node name="WorldLight" type="DirectionalLight2D" parent="."]
+position = Vector2(0, -1)
+energy = 0.5
+blend_mode = 1
+script = ExtResource("3_uawcr")
+
+[node name="LightSwitch" parent="." instance=ExtResource("3_s7bp5")]
+position = Vector2(-248, -64)
+State = 1
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_5tb3d")
+format = 2
+layer_0/tile_data = PackedInt32Array(65533, 0, 3, 65532, 0, 3, 65531, 0, 3, 2, 0, 3, 3, 0, 3, 65530, 0, 3, 65529, 0, 3, 4, 0, 3, 5, 0, 3, -65526, 0, 3, -11, 0, 3, -12, 0, 3, -13, 0, 3, -15, 0, 3, -14, 0, 3, -65525, 0, 3, -65524, 0, 3, -65523, 0, 3, -65522, 0, 3, -65521, 0, 3, -65520, 0, 3, -65519, 0, 3, -65518, 0, 3, -16, 0, 3, -17, 0, 3, -18, 0, 3, -19, 0, 3, -20, 0, 3, -21, 0, 3, -65531, 0, 3, -65530, 0, 3, -65529, 0, 3, -65528, 0, 3, -65527, 0, 3, -7, 0, 3, -8, 0, 3, -9, 0, 3, -10, 0, 3, -196598, 0, 3, -131062, 0, 3, -917507, 0, 3, -851971, 0, 3, -786435, 0, 3, -720899, 0, 3, -655363, 0, 3, -589827, 0, 3, -524291, 0, 3, -458755, 0, 3, -917506, 0, 3, -851970, 0, 3, -786434, 0, 3, -720898, 0, 3, -655362, 0, 3, -589826, 0, 3, -524290, 0, 3, -458754, 0, 3, -524286, 0, 3, -458750, 0, 3, -524285, 0, 3, -458749, 0, 3, -524284, 0, 3, -458748, 0, 3, -524283, 0, 3, -458747, 0, 3, -524282, 0, 3, -458746, 0, 3, -524281, 0, 3, -458745, 0, 3, -524280, 0, 3, -458744, 0, 3, -524279, 0, 3, -458743, 0, 3, -524278, 0, 3, -458742, 0, 3, -524277, 0, 3, -458741, 0, 3, -524276, 0, 3, -458740, 0, 3, -524275, 0, 3, -458739, 0, 3, -196624, 0, 3, -196625, 0, 3, -196623, 0, 3, 1, 0, 3, 0, 0, 3, 65535, 0, 3, 65534, 0, 3)
+
+[node name="SpawnAlchemy" parent="." instance=ExtResource("6_i2ucs")]
+position = Vector2(0, -128)
+
+[node name="CombineAlchemy" type="CharacterBody2D" parent="."]
+position = Vector2(0, -64)
+script = ExtResource("7_imgbl")
+
+[node name="DebugOneWayPlatform" parent="CombineAlchemy" instance=ExtResource("5_3vbc1")]
+position = Vector2(176, 8)
+
+[node name="DebugOneWayPlatform2" parent="CombineAlchemy" instance=ExtResource("5_3vbc1")]
+position = Vector2(-208, 8)
+
+[node name="DebugOneWayPlatform3" parent="CombineAlchemy" instance=ExtResource("5_3vbc1")]
+position = Vector2(0, -448)
+
+[node name="CollisionShape2D" parent="CombineAlchemy/DebugOneWayPlatform3" index="0"]
+shape = SubResource("RectangleShape2D_d1mjn")
+
+[node name="Platform" parent="CombineAlchemy/DebugOneWayPlatform3" index="1"]
+region_rect = Rect2(0, 0, 64, 16)
+
+[node name="DebugSpike" parent="." instance=ExtResource("8_acnxc")]
+position = Vector2(432, -48)
+
+[node name="PushableBlock" parent="." instance=ExtResource("9_7ylw8")]
+position = Vector2(496, -48)
+New_Position = Vector2(208, -48)
+New_Scale = Vector2(2, 2)
+
+[node name="RoomSetter" parent="." instance=ExtResource("11_lfcno")]
+position = Vector2(0, -64)
+Bounds = Vector4(-320, -208, 320, 152)
+
+[node name="CollisionShape2D" parent="RoomSetter" index="0"]
+position = Vector2(0, -28)
+shape = SubResource("RectangleShape2D_cql6v")
+
+[node name="RoomSetter2" parent="." instance=ExtResource("11_lfcno")]
+position = Vector2(-544, -112)
+Bounds = Vector4(-960, -320, -320, 48)
+
+[node name="CollisionShape2D" parent="RoomSetter2" index="0"]
+position = Vector2(-96, -24)
+shape = SubResource("RectangleShape2D_cql6v")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(-576, -320)
+
+[editable path="CombineAlchemy/DebugOneWayPlatform3"]
+[editable path="RoomSetter"]
+[editable path="RoomSetter2"]

@@ -1,0 +1,115 @@
+[gd_scene load_steps=16 format=3 uid="uid://ch486sykoene8"]
+
+[ext_resource type="Script" path="res://Scripts/Entitys/ParentalScripts/MediumMonster.gd" id="1_qe37n"]
+[ext_resource type="Texture2D" uid="uid://7aadq0h818hc" path="res://Sprites/Entitys/MediumMonster-Sheet.png" id="2_685qq"]
+[ext_resource type="Texture2D" uid="uid://b2spc6a4diekk" path="res://Sprites/Other/LightTexture.png" id="3_y67yq"]
+[ext_resource type="PackedScene" uid="uid://ca8piejtr3j5o" path="res://Prefabs/Components/DamageComponent.tscn" id="4_o6mbo"]
+[ext_resource type="Texture2D" uid="uid://bw1lm7spokdwx" path="res://Sprites/Particles/Sphereparticle.png" id="5_scxqj"]
+
+[sub_resource type="Animation" id="Animation_gyrxn"]
+resource_name = "Walk"
+length = 0.6
+loop_mode = 1
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [19, 20, 21, 22]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qcx7w"]
+_data = {
+"Walk": SubResource("Animation_gyrxn")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jcbrv"]
+size = Vector2(96, 96)
+
+[sub_resource type="Curve" id="Curve_avhlu"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.26495, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_dav80"]
+curve = SubResource("Curve_avhlu")
+
+[sub_resource type="Curve" id="Curve_bf17n"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 360), 0.0, 0.0, 0, 0, Vector2(1, -360), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_87bws"]
+curve = SubResource("Curve_bf17n")
+
+[sub_resource type="Curve" id="Curve_p4evd"]
+_data = [Vector2(0.612565, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.04341, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_u2f26"]
+curve = SubResource("Curve_p4evd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mdkva"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(40, 1, 1)
+angle_min = -720.0
+angle_max = 720.0
+angle_curve = SubResource("CurveTexture_87bws")
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 250, 0)
+linear_accel_min = -100.0
+linear_accel_max = 166.7
+damping_min = 10.0
+damping_max = 25.0
+scale_min = 0.25
+scale_max = 0.75
+scale_curve = SubResource("CurveTexture_u2f26")
+color = Color(0.14902, 0.109804, 0.215686, 1)
+alpha_curve = SubResource("CurveTexture_dav80")
+
+[node name="MediumMonster" type="CharacterBody2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_qe37n")
+Speed = 200.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_685qq")
+hframes = 23
+frame = 19
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qcx7w")
+}
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(16, 0)
+energy = 0.25
+range_layer_min = -100
+texture = ExtResource("3_y67yq")
+texture_scale = 0.4
+
+[node name="DamageComponent" parent="." instance=ExtResource("4_o6mbo")]
+Damage = 10.0
+
+[node name="CollisionShape2D" parent="DamageComponent" index="0"]
+position = Vector2(-12, 16)
+shape = SubResource("RectangleShape2D_jcbrv")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(-8, 64)
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_mdkva")
+texture = ExtResource("5_scxqj")
+
+[editable path="DamageComponent"]

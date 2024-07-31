@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bulm4doa4banh"]
+
+[ext_resource type="Script" path="res://Scripts/Objects/PressurePlate.gd" id="1_66pg1"]
+[ext_resource type="Texture2D" uid="uid://b4l1dr0tcf2k4" path="res://Sprites/Enviorment/Objects/PressurePlate-Sheet.png" id="2_1nxtr"]
+
+[node name="PressurePlate" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_66pg1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_1nxtr")
+hframes = 2
+
+[connection signal="area_entered" from="." to="." method="_Area_Entered"]
+[connection signal="area_exited" from="." to="." method="_Area_Exited"]

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://clu8fp6rif63x"]
+
+[ext_resource type="Script" path="res://Scripts/Objects/EnemySpawner.gd" id="1_7owj4"]
+
+[node name="EnemySpawner" type="Node2D"]
+script = ExtResource("1_7owj4")
+Enemy_Type = "res://Prefabs/Entitys/FlyingShadow.tscn"
+Number_Of_Enemies = 1
+Spawn_Time = 0.1
+Respawn_Time = 1.0

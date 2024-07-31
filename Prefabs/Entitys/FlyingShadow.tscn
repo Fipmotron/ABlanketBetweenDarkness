@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://ivt35h4r35gr"]
+
+[ext_resource type="Texture2D" uid="uid://8eay3ji10hlb" path="res://Sprites/Entitys/FlyingShadow.png" id="1_2ce27"]
+[ext_resource type="Script" path="res://Scripts/Entitys/ParentalScripts/FlyingShadow.gd" id="1_nm87e"]
+[ext_resource type="PackedScene" uid="uid://1twoih6rtuxt" path="res://Prefabs/Components/HealthComponent.tscn" id="3_43dv5"]
+[ext_resource type="PackedScene" uid="uid://ca8piejtr3j5o" path="res://Prefabs/Components/DamageComponent.tscn" id="3_gsi6x"]
+[ext_resource type="Script" path="res://Scripts/Entitys/ComponentScripts/DetectionComponent.gd" id="5_lgw4m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0g6cv"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tdxt0"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2howx"]
+radius = 192.666
+
+[node name="FlyingShadow" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_nm87e")
+
+[node name="FlyingShadow" type="Sprite2D" parent="."]
+texture = ExtResource("1_2ce27")
+
+[node name="DamageComonent" parent="." instance=ExtResource("3_gsi6x")]
+Damage = 3.0
+
+[node name="CollisionShape2D" parent="DamageComonent" index="0"]
+shape = SubResource("CircleShape2D_0g6cv")
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_43dv5")]
+collision_layer = 0
+Max_Health = 1.0
+
+[node name="CollisionShape2D" parent="HealthComponent" index="0"]
+shape = SubResource("CircleShape2D_tdxt0")
+
+[node name="DetectionComponent" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("5_lgw4m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionComponent"]
+shape = SubResource("CircleShape2D_2howx")
+
+[node name="RayCast2D" type="RayCast2D" parent="DetectionComponent"]
+target_position = Vector2(0, 0)
+collision_mask = 16
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[connection signal="body_entered" from="DetectionComponent" to="DetectionComponent" method="_Body_Entered"]
+[connection signal="body_exited" from="DetectionComponent" to="DetectionComponent" method="_Body_Exited"]
+
+[editable path="DamageComonent"]
+[editable path="HealthComponent"]

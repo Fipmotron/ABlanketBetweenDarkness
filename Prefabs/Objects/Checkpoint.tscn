@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cpjpff1v3f8v8"]
+
+[node name="Checkpoint" type="Area2D"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

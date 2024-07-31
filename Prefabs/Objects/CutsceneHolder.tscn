@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://qibng3m3kgne"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ncuva"]
+
+[node name="CutsceneHolder" type="AnimationPlayer"]
+libraries = {
+"": SubResource("AnimationLibrary_ncuva")
+}
